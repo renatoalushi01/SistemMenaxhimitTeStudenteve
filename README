@@ -1,0 +1,1 @@
+Don't forget to updarte your connection string in appsettings.json and in Package Manager Console run update-database 
