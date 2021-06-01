@@ -16,6 +16,5 @@ namespace SistemMenaxhimitTeStudenteve.Models
         public string ProfesioniDeshiruar { get; set; }
         public string TedhenaTePergj { get; set; }
         public string Fjalkalimi { get; set; }
-        public ICollection<Lendet> Lendet { get; set; }
     }
 }

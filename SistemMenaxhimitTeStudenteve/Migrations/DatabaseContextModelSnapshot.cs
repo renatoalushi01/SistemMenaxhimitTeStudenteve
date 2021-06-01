@@ -26,24 +26,10 @@ namespace SistemMenaxhimitTeStudenteve.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Emer")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Info")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Subscribe")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("Lendet");
 
@@ -51,30 +37,22 @@ namespace SistemMenaxhimitTeStudenteve.Migrations
                         new
                         {
                             Id = 1,
-                            Data = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Emer = "Lenda1",
-                            Subscribe = false
+                            Emer = "Lenda1"
                         },
                         new
                         {
                             Id = 2,
-                            Data = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Emer = "Lenda2",
-                            Subscribe = false
+                            Emer = "Lenda2"
                         },
                         new
                         {
                             Id = 3,
-                            Data = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Emer = "Lenda3",
-                            Subscribe = false
+                            Emer = "Lenda3"
                         },
                         new
                         {
                             Id = 4,
-                            Data = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Emer = "Lenda4",
-                            Subscribe = false
+                            Emer = "Lenda4"
                         });
                 });
 
@@ -111,11 +89,51 @@ namespace SistemMenaxhimitTeStudenteve.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("SistemMenaxhimitTeStudenteve.Models.Lendet", b =>
+            modelBuilder.Entity("SistemMenaxhimitTeStudenteve.Models.StudentLend", b =>
                 {
-                    b.HasOne("SistemMenaxhimitTeStudenteve.Models.Student", null)
-                        .WithMany("Lendet")
-                        .HasForeignKey("StudentId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Info")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LendId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LendetId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Subscribe")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LendetId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentLends");
+                });
+
+            modelBuilder.Entity("SistemMenaxhimitTeStudenteve.Models.StudentLend", b =>
+                {
+                    b.HasOne("SistemMenaxhimitTeStudenteve.Models.Lendet", "Lendet")
+                        .WithMany()
+                        .HasForeignKey("LendetId");
+
+                    b.HasOne("SistemMenaxhimitTeStudenteve.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

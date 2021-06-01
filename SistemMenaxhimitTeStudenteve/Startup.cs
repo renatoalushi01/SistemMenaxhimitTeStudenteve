@@ -45,6 +45,8 @@ namespace SistemMenaxhimitTeStudenteve
             services.AddScoped<IStudentServices, StudentServices>();
             services.AddScoped<LendetRepository>();
             services.AddScoped<ILendetService, LendetService>();
+            services.AddScoped<StudentLendRepository>();
+            services.AddScoped<IStudentLendService, StudentLendService>();
 
             //Configure AutoMapper
             var config = new MapperConfiguration(c => { c.AddProfile(new AutoMaperProfile()); });

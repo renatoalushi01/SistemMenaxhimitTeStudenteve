@@ -18,11 +18,16 @@ namespace SistemMenaxhimitTeStudenteve.Controllers
     {
         private readonly IStudentServices _studentServices;
         private readonly IMapper _mapper;
-        public StudentsController(IStudentServices studentServices, IMapper mapper)
+        private readonly ILendetService _lendService;
+        private readonly IStudentLendService _studentLendService;
+        public StudentsController(IStudentServices studentServices, IMapper mapper ,
+            ILendetService lendetService,
+            IStudentLendService studentLendService)
         {
             _studentServices = studentServices;
-
             _mapper = mapper;
+            _lendService = lendetService;
+            _studentLendService = studentLendService;
         }
 
         [Authorize]
@@ -130,23 +135,21 @@ namespace SistemMenaxhimitTeStudenteve.Controllers
 
             var student = await _studentServices.GetStudentForEdit(Convert.ToInt32(id));
             var model = _mapper.Map<EditStudent>(student);
-
+            model.Lendet = await _lendService.GetAll();
+            
             return View(model);
         }
 
         // POST: StudentsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(EditStudent model)
         {
-            try
+            if(!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
 
 

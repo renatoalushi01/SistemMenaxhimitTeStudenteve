@@ -34,7 +34,7 @@ namespace SistemMenaxhimitTeStudenteve.Repository.Commin
         }
         public async Task<Student> GetStudentForEdit(int id)
         {
-            return await _context.Students.Include(x => x.Lendet).FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Students.FirstOrDefaultAsync(x => x.Id == id);
         }
 
     }

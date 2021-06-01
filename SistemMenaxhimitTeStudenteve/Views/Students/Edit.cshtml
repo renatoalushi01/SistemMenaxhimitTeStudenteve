@@ -49,28 +49,19 @@
                                 <tr>
                                     <th>Lenda</th>
                                     <th>Subscribe</th>
-                                    <th>Data</th>
-                                    <th>
-                                        Info te tjera
-                                    </th>
-
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model.Lendet)
+                                @for (var i=0;i<Model.Lendet.Count();i++)
                                 {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Emer)
+                                            @Model.Lendet.ElementAt(i).Emer
                                         </td>
                                         <td>
-                                            <input type="checkbox" />
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Data)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Info)
+                                            <input asp-for="StudentLends[i].Subscribe" type="checkbox" />
+                                            <input asp-for="StudentLends[i].LendId" value="@Model.Lendet.ElementAt(i).Id" type="hidden" />
+                                            <input asp-for="StudentLends[i].StudentId" value="@Model.Id" type="hidden" />
                                         </td>
                                     </tr>
                                 }

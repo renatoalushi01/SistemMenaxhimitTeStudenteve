@@ -24,6 +24,7 @@ namespace SistemMenaxhimitTeStudenteve.ViewModels
         [Display(Name = "Te dhena te pergjithshme")]
         public string TedhenaTePergj { get; set; }
         public IEnumerable<Lendet> Lendet { get; set; }
+        public List<StudentLend> StudentLends { get; set; }
         
     }
 }
