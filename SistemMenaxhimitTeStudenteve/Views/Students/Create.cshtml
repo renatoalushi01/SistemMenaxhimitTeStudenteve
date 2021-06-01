@@ -1,0 +1,58 @@
+﻿@model SistemMenaxhimitTeStudenteve.ViewModels.RegisterStudent
+@{
+    ViewData["Title"] = "Register";
+    var error = ViewData["Error"];
+}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class=" col-md-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="panel-heading"> <h2>Rregjistrohu</h2></div>
+
+                <div class="panel-body">
+                    @if (error != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <strong>Error!</strong> @error
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        </div>
+                    }
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="NID"></label>
+                            <input asp-for="NID" class="form-control"/>
+                            <span asp-validation-for="NID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Emer"></label>
+                            <input asp-for="Emer" class="form-control"/>
+                            <span asp-validation-for="Emer" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Mbiemer"></label>
+                            <input asp-for="Mbiemer" class="form-control"/>
+                            <span asp-validation-for="Mbiemer" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Fjalkalimi"></label>
+                            <input asp-for="Fjalkalimi" class="form-control"/>
+                            <span asp-validation-for="Fjalkalimi" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="KonfirmFjallalimin"></label>
+                            <input asp-for="KonfirmFjallalimin" class="form-control"/>
+                            <span asp-validation-for="KonfirmFjallalimin" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <a asp-action="Index" id="backLink" class="btn btn-info"><i class="fas fa-long-arrow-alt-left"></i>&nbsp; Back</a>
+                            <input type="submit" value="Create" class="btn btn-primary float-right"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

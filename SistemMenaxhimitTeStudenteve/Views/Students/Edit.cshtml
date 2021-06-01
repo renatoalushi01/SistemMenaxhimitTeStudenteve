@@ -1,0 +1,88 @@
+﻿@model SistemMenaxhimitTeStudenteve.ViewModels.EditStudent
+@{
+    ViewData["Title"] = "Register";
+    var error = ViewData["Error"];
+}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class=" col-md-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="panel-heading"> <h2>Modifiko te dhenat e studentit</h2></div>
+
+                <div class="panel-body">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="NID"></label>
+                            <input asp-for="NID" class="form-control" />
+                            <span asp-validation-for="NID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Emer"></label>
+                            <input asp-for="Emer" class="form-control" />
+                            <span asp-validation-for="Emer" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Mbiemer"></label>
+                            <input asp-for="Mbiemer" class="form-control" />
+                            <span asp-validation-for="Mbiemer" class="text-danger"></span>
+                            <input asp-for="Fjalkalimi" type="hidden" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="NotaMesartare"></label>
+                            <input asp-for="NotaMesartare" class="form-control" type="number" />
+                            <span asp-validation-for="NotaMesartare" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProfesioniDeshiruar"></label>
+                            <input asp-for="ProfesioniDeshiruar" class="form-control" />
+                            <span asp-validation-for="ProfesioniDeshiruar" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TedhenaTePergj"></label>
+                            <input asp-for="TedhenaTePergj" class="form-control" />
+                            <span asp-validation-for="TedhenaTePergj" class="text-danger"></span>
+                        </div>
+                        <table class="table table-bordered table-striped table-hover table-responsive-md table-responsive-sm">
+                            <thead>
+                                <tr>
+                                    <th>Lenda</th>
+                                    <th>Subscribe</th>
+                                    <th>Data</th>
+                                    <th>
+                                        Info te tjera
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Lendet)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Emer)
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" />
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Data)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Info)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <a asp-action="Index" id="backLink" class="btn btn-info"><i class="fas fa-long-arrow-alt-left"></i>&nbsp; Back</a>
+                            <input type="submit" value="Ruaj" class="btn btn-primary float-right" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

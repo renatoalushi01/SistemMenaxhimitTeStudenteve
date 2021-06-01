@@ -8,8 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using SistemMenaxhimitTeStudenteve.Repository;
+using SistemMenaxhimitTeStudenteve.Repository.Commin;
+using SistemMenaxhimitTeStudenteve.Services;
 
 namespace SistemMenaxhimitTeStudenteve
 {
@@ -29,6 +33,23 @@ namespace SistemMenaxhimitTeStudenteve
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.Cookie.IsEssential = true;
+                    options.LoginPath = "/Students/LogIn";
+                });
+
+            //Services and Repositories Configuring 
+            services.AddScoped<StudentRepository>();
+            services.AddScoped<IStudentServices, StudentServices>();
+            services.AddScoped<LendetRepository>();
+            services.AddScoped<ILendetService, LendetService>();
+
+            //Configure AutoMapper
+            var config = new MapperConfiguration(c => { c.AddProfile(new AutoMaperProfile()); });
+            var mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,13 +70,15 @@ namespace SistemMenaxhimitTeStudenteve
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Students}/{action=Index}/{id?}");
             });
         }
     }

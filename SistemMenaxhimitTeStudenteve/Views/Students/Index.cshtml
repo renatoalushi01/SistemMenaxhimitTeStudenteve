@@ -1,5 +1,75 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<Student>
+
 @{
+    ViewData["Title"] = "Studentet";
 }
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class=" col-md-10 col-12">
+        <div class="card">
+            <div class="card-header"> <h2>List e Studenteve</h2></div>
+            <div class="card-body">
+                <div class="panel-body">
+                    <div class="table-responsive m-t-40">
+                        <div id="example23_wrapper" class="dataTables_wrapper">
+                            <table class="table table-bordered table-striped table-hover table-responsive-md table-responsive-sm">
+                                <thead>
+                                <tr>
+                                    <th>Nr.</th>
+                                    <th>NID Studenti</th>
+                                    <th>Emer Studenti</th>
+                                    <th>
+                                        Mbiemer Studenti
+                                    </th>
+                                    <th>
+                                        Mbiemer Studenti
+                                    </th>
+                                    <th>
+                                        Numri i lendeve te bera subsscribe
+                                    </th>
+                                    <td></td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @{
+                                    var index = ViewBag.StartIndex;
+                                }
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @(index++)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NID)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Emer)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Mbiemer)
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">&nbsp; Modifiko</a>
+                                            <a asp-action="Delete" class="btn btn-danger"> &nbsp; Fshi</a>
+                                        </td>
+
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

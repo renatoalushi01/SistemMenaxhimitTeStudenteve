@@ -1,0 +1,49 @@
+﻿@model SistemMenaxhimitTeStudenteve.ViewModels.LoginStudent
+@{
+    ViewData["Title"] = "Register";
+    var error = ViewData["Error"];
+}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class=" col-md-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="panel-heading"> <h2>Identifikohu</h2></div>
+
+                <div class="panel-body">
+                    @if (error != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <strong>Error!</strong> @error
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        </div>
+                    }
+                    <form asp-action="Login">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="NID"></label>
+                            <input asp-for="NID" class="form-control" />
+                            <span asp-validation-for="NID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Fjalkalimi"></label>
+                            <input asp-for="Fjalkalimi" class="form-control" />
+                            <span asp-validation-for="Fjalkalimi" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox checkbox-primary pull-left p-t-0 col-md-6 pl-0">
+                                <input asp-for="MeMbajMend" id="checkbox-signup" type="checkbox">
+                                <label for="checkbox-signup"> Me mbaj mend</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <a asp-action="Create" id="backLink" class="btn btn-info"><i class="fas fa-long-arrow-alt-left"></i>&nbsp; Rregjistrohu</a>
+                            <input type="submit" value="Identifikohu" class="btn btn-primary float-right" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
