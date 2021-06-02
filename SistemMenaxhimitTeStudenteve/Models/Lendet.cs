@@ -9,7 +9,7 @@ namespace SistemMenaxhimitTeStudenteve.Models
     public class Lendet : BaseEntity
     {
         public string Emer { get; set; }
-        
-        
+
+        public string Info { get; set; }
     }
 }

@@ -9,34 +9,39 @@ namespace SistemMenaxhimitTeStudenteve.Services
 {
     public class StudentLendService : IStudentLendService
     {
-        private readonly StudentLendRepository _studentLendRepositoryl;
+        private readonly StudentLendRepository _studentLendRepository;
         public StudentLendService(StudentLendRepository studentLendRepository)
         {
-            _studentLendRepositoryl = studentLendRepository;
+            _studentLendRepository = studentLendRepository;
         }
         public async Task AddAsync(StudentLend studentLend)
         {
-            await _studentLendRepositoryl.AddAsync(studentLend);
+            await _studentLendRepository.AddAsync(studentLend);
         }
 
         public async Task DeleteAsync(int id)
         {
-            await _studentLendRepositoryl.RemoveAsync(id);
+            await _studentLendRepository.RemoveAsync(id);
         }
 
-        public Task<IEnumerable<StudentLend>> GetAll()
+        public async Task<List<StudentLend>> GetAllLendStudent(int studentId)
         {
-            throw new NotImplementedException();
+            return await _studentLendRepository.GetAllStudentLend(studentId);
+        }
+
+        public int TotalLend(int studentId)
+        {
+            return _studentLendRepository.TotalLend(studentId);
         }
 
         public async Task<StudentLend> GetAsync(int id)
         {
-            return await _studentLendRepositoryl.GetAsync(id);
+            return await _studentLendRepository.GetAsync(id);
         }
 
         public async Task UpdateAsync(StudentLend studentLend)
         {
-            await _studentLendRepositoryl.UpdateAsync(studentLend);
+            await _studentLendRepository.UpdateAsync(studentLend);
         }
     }
 }

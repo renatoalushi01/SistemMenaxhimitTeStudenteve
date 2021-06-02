@@ -8,10 +8,11 @@ namespace SistemMenaxhimitTeStudenteve.Services
 {
     public interface IStudentLendService
     {
-        Task<IEnumerable<StudentLend>> GetAll();
         Task AddAsync(StudentLend studentLend);
         Task<StudentLend> GetAsync(int id);
         Task UpdateAsync(StudentLend studentLend);
         Task DeleteAsync(int id);
+        Task<List<StudentLend>> GetAllLendStudent(int studentId);
+        int TotalLend(int studentId);
     }
 }
