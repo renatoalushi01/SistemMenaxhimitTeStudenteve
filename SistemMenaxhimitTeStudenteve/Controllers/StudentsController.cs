@@ -34,8 +34,18 @@ namespace SistemMenaxhimitTeStudenteve.Controllers
         public async Task<IActionResult> Index()
         {
             var students = await _studentServices.GetAllStudents();
-            ViewBag.StartIndex = 0;
+            ViewBag.StartIndex = 1;
             return View(students);
+        }
+
+        public JsonResult GetLendPerStudent(int? studentId)
+        {
+            if (studentId == null)
+            {
+                return new JsonResult(new { });
+            }
+            var result = _studentLendService.TotalLend(Convert.ToInt32(studentId));
+            return new JsonResult( new{result});
         }
 
         [Authorize]
@@ -136,36 +146,50 @@ namespace SistemMenaxhimitTeStudenteve.Controllers
             var student = await _studentServices.GetStudentForEdit(Convert.ToInt32(id));
             var model = _mapper.Map<EditStudent>(student);
             model.Lendet = await _lendService.GetAll();
-            
+            var previousData = await _studentLendService.GetAllLendStudent(model.Id);
+            if (previousData.Count != 0)
+            {
+                model.StudentLends = previousData;
+            }
             return View(model);
         }
 
         // POST: StudentsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EditStudent model)
+        public async Task<IActionResult> Edit(EditStudent model)
         {
             if(!ModelState.IsValid)
             {
                 return NotFound();
             }
+
+            foreach (var item in model.StudentLends)
+            {
+                item.Data = DateTime.Now;
+                await _studentLendService.AddAsync(item);
+            }
+
+            var student = _mapper.Map<Student>(model);
+            await _studentServices.UpdateAsync(student);
             return RedirectToAction("Index");
         }
 
 
-        // POST: StudentsController/Delete/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [Authorize]
+        public async Task<IActionResult> Delete(int? id)
         {
-            try
+            if (id == null)
             {
-                return RedirectToAction(nameof(Index));
+                ViewData["Error"] = "Studenti nuk u fshi";
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            await _studentServices.DeleteAsync(Convert.ToInt32(id));
+            return RedirectToAction("Index");
         }
 
     }

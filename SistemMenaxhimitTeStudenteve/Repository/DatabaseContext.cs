@@ -24,21 +24,25 @@ namespace SistemMenaxhimitTeStudenteve.Repository
             {
                 Id=1,
                 Emer = "Lenda1",
+                Info = "Test Test"
             });
             builder.Entity<Lendet>().HasData(new Lendet
             {
                 Id = 2,
                 Emer = "Lenda2",
+                Info = "Test Test"
             });
             builder.Entity<Lendet>().HasData(new Lendet
             {
                 Id = 3,
                 Emer = "Lenda3",
+                Info = "Test Test"
             });
             builder.Entity<Lendet>().HasData(new Lendet
             {
                 Id = 4,
                 Emer = "Lenda4",
+                Info = "Test Test"
             });
         }
     }
