@@ -49,9 +49,16 @@ namespace SistemMenaxhimitTeStudenteve.Controllers
         }
 
         [Authorize]
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var model = new StudentDetails();
+            model.Student = await _studentServices.GetAsync(Convert.ToInt32(id));
+            model.StudentLends = await _studentLendService.GetStudentLends(Convert.ToInt32(id));
+            return View(model);
         }
 
         [AllowAnonymous]
@@ -167,7 +174,7 @@ namespace SistemMenaxhimitTeStudenteve.Controllers
             foreach (var item in model.StudentLends)
             {
                 item.Data = DateTime.Now;
-                await _studentLendService.AddAsync(item);
+                await _studentLendService.UpdateAsync(item);
             }
 
             var student = _mapper.Map<Student>(model);

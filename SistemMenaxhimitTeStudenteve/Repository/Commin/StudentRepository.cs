@@ -25,7 +25,7 @@ namespace SistemMenaxhimitTeStudenteve.Repository.Commin
 
         public async Task<IEnumerable<Student>> GetAllAsync()
         {
-            return await _context.Students.ToListAsync();
+            return await _context.Students).ToListAsync();
         }
 
         public async Task<Student> GetIfExist(string nId)
@@ -36,6 +36,7 @@ namespace SistemMenaxhimitTeStudenteve.Repository.Commin
         {
             return await _context.Students.FirstOrDefaultAsync(x => x.Id == id);
         }
+
 
     }
 }

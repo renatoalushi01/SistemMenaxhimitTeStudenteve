@@ -43,5 +43,10 @@ namespace SistemMenaxhimitTeStudenteve.Services
         {
             await _studentLendRepository.UpdateAsync(studentLend);
         }
+
+        public async Task<IEnumerable<StudentLend>> GetStudentLends(int studentId)
+        {
+            return await _studentLendRepository.GetStudentLendsAsync(studentId);
+        }
     }
 }

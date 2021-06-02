@@ -1,5 +1,72 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model SistemMenaxhimitTeStudenteve.ViewModels.StudentDetails
 @{
+    ViewData["Title"] = "Detajet e studentve";
 }
+<div class="row">
+
+    <div class="col-md-9">
+        <div class="card-header">
+            <h2>Detajet e Studenit @Model.Student.Emer</h2>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>NID</th>
+                        <td>@Model.Student.NID</td>
+                    </tr>
+                    <tr>
+                        <th>Emer</th>
+                        <td>@Model.Student.Emer</td>
+                    </tr>
+                    <tr>
+                        <th>Mbiemer</th>
+                        <td>@Model.Student.Mbiemer</td>
+                    </tr>
+                    <tr>
+                        <th>Nota Mesatare</th>
+                        <td>@Model.Student.NotaMesartare</td>
+                    </tr>
+                    <tr>
+                        <th>Profesioni i deshiruar</th>
+                        <td>@Model.Student.ProfesioniDeshiruar</td>
+                    </tr>
+                    <tr>
+                        <th>Te dhena te pergjithshme </th>
+                        <td>@Model.Student.TedhenaTePergj</td>
+                    </tr>
+                </thead>
+            </table>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Lenda</th>
+                        <th>Subcribed</th>
+                        <th>Data</th>
+                        <th>Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.StudentLends)
+                    {
+                    <tr>
+                        <td> @item.Lendet.Emer  </td>
+
+                        <td>
+                            @{
+                                var check = item.Subscribe ? "checked" : "";
+                            }
+                            <input type="checkbox" checked="@check" disabled />
+                        </td>
+                        <td> @item.Data.ToString("F")  </td>
+                        <td>
+                            @item.Lendet.Info
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

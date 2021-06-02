@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using SistemMenaxhimitTeStudenteve.Repository;
@@ -13,6 +14,7 @@ namespace SistemMenaxhimitTeStudenteve.Models
         public bool Subscribe { get; set; }
         public DateTime Data { get; set; }
         public virtual Student Student { get; set; }
+        [ForeignKey("LendId")]
         public virtual Lendet Lendet { get; set; }
     }
 }

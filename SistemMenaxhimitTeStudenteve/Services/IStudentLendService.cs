@@ -14,5 +14,6 @@ namespace SistemMenaxhimitTeStudenteve.Services
         Task DeleteAsync(int id);
         Task<List<StudentLend>> GetAllLendStudent(int studentId);
         int TotalLend(int studentId);
+        Task<IEnumerable<StudentLend>> GetStudentLends(int studentId);
     }
 }
