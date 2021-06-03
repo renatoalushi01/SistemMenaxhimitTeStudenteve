@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SistemMenaxhimitTeStudenteve.Models;
+using SistemMenaxhimitTeStudenteve.Repository.Extensions;
 
 namespace SistemMenaxhimitTeStudenteve.Repository.Commin
 {
@@ -23,9 +24,10 @@ namespace SistemMenaxhimitTeStudenteve.Repository.Commin
 
         }
 
-        public async Task<IEnumerable<Student>> GetAllAsync()
+        public async Task<PaginatedList<Student>> GetPaginatedAsync(int page,int pageSize)
         {
-            return await _context.Students).ToListAsync();
+            var result = _context.Students.OrderBy(x => x.Emer);
+            return await PaginatedList<Student>.CreateAsync(result, page, pageSize);
         }
 
         public async Task<Student> GetIfExist(string nId)

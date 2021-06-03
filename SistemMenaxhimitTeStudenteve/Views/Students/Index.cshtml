@@ -1,5 +1,4 @@
-﻿@using Microsoft.CodeAnalysis
-@model IEnumerable<Student>
+﻿@model SistemMenaxhimitTeStudenteve.Repository.Extensions.PaginatedList<Student>
 
 @{
     ViewData["Title"] = "Studentet";
@@ -67,14 +66,37 @@
                                                 <input type="hidden" value="@item.Id" name="StudentId" />
                                                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">&nbsp; Modifiko</a>
                                                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">&nbsp; Detajet</a>
-                                                <a asp-action="Delete" class="btn btn-danger" onclick="return confirm('Jeni i sigurt qe deshironi ta fshini?');"> &nbsp; Fshi</a>
+                                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" onclick="return confirm('Jeni i sigurt qe deshironi ta fshini?');"> &nbsp; Fshi</a>
                                             </td>
 
                                         </tr>
                                     }
                                 </tbody>
                             </table>
+                            <div class="float-left" id="example23_info" role="status" aria-live="polite">Showing @ViewData["RowPerPage"] of @ViewData["total"]</div>
+                            <div class="float-right" id="example23_paginate">
+                                @{
+                                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                                    var total = (int)ViewBag.Totalnumber;
+                                }
 
+                                <a class="btn btn-info" id="@prevDisabled" aria-controls="example23" data-dt-idx="0" tabindex="0"
+                                   asp-action="Index"
+                                   asp-route-page="@(Model.PageIndex - 1)">
+                                    Previous
+                                </a>
+                                @for (var i = 1; i <= total; i++)
+                                {
+                                    <a asp-action="Index"
+                                       asp-route-page="@i" class="btn btn-secondary">@i</a>
+                                }
+                                <a class="btn btn-info" id="@nextDisabled" aria-controls="example23" data-dt-idx="7" tabindex="0"
+                                   asp-action="Index"
+                                   asp-route-page="@(Model.PageIndex + 1)">
+                                    Next
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -86,17 +108,13 @@
     <script>
         $(document).ready(function () {
             var studentsId = $("input[name='StudentId']");
-            for (var i = 0; studentsId.length; i++) {
-                debugger;
-                var studentId = studentsId[i].value;
-                console.log(studentId);
+            for (var i = 0; i < studentsId.length; i++) {
+                const studentId = studentsId[i].value;
                 $.ajax({
-                    url: "/Students/GetLendPerStudent/" + studentId,
-                    success: function(response) {
-                        if (response != null) {
-                            var listId = '#lendList' + response.result;
-                            $(listId).append('<li>' + response.result + '</li>');
-                        }
+                    url: "/Students/GetLendPerStudent?studentId=" + studentId,
+                    success: function (response) {
+                        var listId = '#lendList' + studentId;
+                        $(listId).append('<li>' + response.result + '</li>');
 
                     }
                 });

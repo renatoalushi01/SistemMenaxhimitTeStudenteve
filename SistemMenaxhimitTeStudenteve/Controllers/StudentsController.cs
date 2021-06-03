@@ -9,6 +9,7 @@ using SistemMenaxhimitTeStudenteve.Services;
 using SistemMenaxhimitTeStudenteve.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -31,21 +32,27 @@ namespace SistemMenaxhimitTeStudenteve.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 0 ,int pageSize = 5)
         {
-            var students = await _studentServices.GetAllStudents();
-            ViewBag.StartIndex = 1;
+            var students = await _studentServices.GetAllStudents(page,pageSize);
+            ViewBag.Startindex = 1;
+            var total = students.CountTotal;
+            ViewData["total"] = total;
+            ViewData["RowPerPage"] = students.Count;
+            ViewBag.Totalnumber = students.TotalPages;
             return View(students);
         }
-
-        public JsonResult GetLendPerStudent(int? studentId)
+        [Authorize]
+        public async Task<JsonResult> GetLendPerStudent(int? studentId)
         {
             if (studentId == null)
             {
                 return new JsonResult(new { });
             }
-            var result = _studentLendService.TotalLend(Convert.ToInt32(studentId));
-            return new JsonResult( new{result});
+
+            var result = await _studentLendService.GetAllLendStudent(Convert.ToInt32(studentId));
+            var total = result.Where(x => x.Subscribe).Select(x => x.LendId).Count();
+            return new JsonResult( new{result = total});
         }
 
         [Authorize]
@@ -68,7 +75,6 @@ namespace SistemMenaxhimitTeStudenteve.Controllers
             return View();
         }
 
-        // POST: StudentsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RegisterStudent model)
@@ -170,22 +176,30 @@ namespace SistemMenaxhimitTeStudenteve.Controllers
             {
                 return NotFound();
             }
-
-            foreach (var item in model.StudentLends)
+            var previousData = await _studentLendService.GetAllLendStudent(model.Id);
+            if (previousData != null)
             {
-                item.Data = DateTime.Now;
-                await _studentLendService.UpdateAsync(item);
+                foreach (var item in model.StudentLends)
+                {
+                    item.Id = previousData.Where(x => x.LendId == item.LendId).Select(x => x.Id).FirstOrDefault();
+                    item.Data = DateTime.Now;
+                    await _studentLendService.UpdateAsync(item);
+                }
             }
-
+            else
+            {
+                foreach (var item in model.StudentLends)
+                {
+                    item.Data = DateTime.Now;
+                    await _studentLendService.AddAsync(item);
+                }
+            }
+            
             var student = _mapper.Map<Student>(model);
             await _studentServices.UpdateAsync(student);
             return RedirectToAction("Index");
         }
 
-
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {

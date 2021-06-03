@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SistemMenaxhimitTeStudenteve.Models;
 using SistemMenaxhimitTeStudenteve.Repository.Commin;
+using SistemMenaxhimitTeStudenteve.Repository.Extensions;
 
 namespace SistemMenaxhimitTeStudenteve.Services
 {
@@ -16,9 +17,9 @@ namespace SistemMenaxhimitTeStudenteve.Services
             _studentRepository = studentRepository;
         }
 
-        public async Task<IEnumerable<Student>> GetAllStudents()
+        public async Task<PaginatedList<Student>> GetAllStudents(int page,int pageSize)
         {
-            return await _studentRepository.GetAllAsync();
+            return await _studentRepository.GetPaginatedAsync(page,pageSize);
         }
 
         public async Task AddAsync(Student student)

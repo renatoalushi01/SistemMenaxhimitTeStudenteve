@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SistemMenaxhimitTeStudenteve.Models;
+using SistemMenaxhimitTeStudenteve.Repository.Extensions;
 
 namespace SistemMenaxhimitTeStudenteve.Services
 {
     public interface IStudentServices
     {
-        Task<IEnumerable<Student>> GetAllStudents();
+        Task<PaginatedList<Student>> GetAllStudents(int page, int pageSize);
         Task AddAsync(Student student);
         Task<Student> GetAsync(int id);
         Task UpdateAsync(Student student);

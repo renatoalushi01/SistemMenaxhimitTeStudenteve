@@ -21,9 +21,9 @@ namespace SistemMenaxhimitTeStudenteve.Repository.Commin
             return await _context.StudentLends.Where(x => x.StudentId == studentId).ToListAsync();
         }
 
-        public int TotalLend(int studentId)
+        public async Task<List<StudentLend>> TotalStudentLend(int studentId)
         {
-            return _context.StudentLends.Where(x => x.StudentId == studentId && x.Subscribe).Select(x => x.LendId).Count();
+            return await _context.StudentLends.Where(x => x.StudentId == studentId && x.Subscribe).ToListAsync();
         }
 
         public async Task<IEnumerable<StudentLend>> GetStudentLendsAsync(int studentId)

@@ -29,9 +29,9 @@ namespace SistemMenaxhimitTeStudenteve.Services
             return await _studentLendRepository.GetAllStudentLend(studentId);
         }
 
-        public int TotalLend(int studentId)
+        public async Task<List<StudentLend>> TotalStudentLend(int studentId)
         {
-            return _studentLendRepository.TotalLend(studentId);
+            return await _studentLendRepository.GetAllStudentLend(studentId);
         }
 
         public async Task<StudentLend> GetAsync(int id)
