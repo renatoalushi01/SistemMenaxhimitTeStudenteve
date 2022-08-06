@@ -1,8 +1,6 @@
-Git clone Url e projektit
+This is a project build in university time 
+with teme : System for the Management of Student Dormitories
+Tech:
+Asp.net web forms , sql server , Html , JavaScript , Css, bootstrap ect...
 
-Per te instaluar paketetat ne projekt
-
-dotnet restore
-
-Vendosni connection String tuaj ne appSetting.jsom dhe ne Packade Manager Console 
-update-database
+I have worked in group and we have done great 
